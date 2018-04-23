@@ -2,6 +2,7 @@ use_frameworks!
 
 target 'CHLMVP_Example' do
   pod 'CHLMVP', :path => '../'
+  pod 'Alamofire', '4.7.1'
 
   target 'CHLMVP_Tests' do
     inherit! :search_paths

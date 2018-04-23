@@ -9,34 +9,19 @@
 Pod::Spec.new do |s|
   s.name             = 'CHLMVP'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of CHLMVP.'
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
+  s.summary          = 'Quickly use MVP.'
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+    Quickly using MVP Design Pattern
                        DESC
 
-  s.homepage         = 'https://github.com/hawhaw.ya@gmail.com/CHLMVP'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
+  s.homepage         = 'https://github.com/nick6969/CHL_MVP'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'hawhaw.ya@gmail.com' => 'hawhaw.ya@gmail.com' }
-  s.source           = { :git => 'https://github.com/hawhaw.ya@gmail.com/CHLMVP.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.source           = { :git => 'https://github.com/nick6969/CHL_MVP.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'CHLMVP/Classes/**/*'
+  s.source_files = 'CHLMVP/Classes/'
   
-  # s.resource_bundles = {
-  #   'CHLMVP' => ['CHLMVP/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
 end
