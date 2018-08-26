@@ -12,8 +12,9 @@ import Foundation
 public typealias JsonModel = Codable & JsonProtocol
 
 public protocol JsonProtocol {
-    static func decodeJson(data: Data?) throws -> Self
-    func encodeToJson() throws -> Data
+    static func decodeJson(data: Data?, decoder: JSONDecoder) throws -> Self
+    func encodeToJson(encoder: JSONEncoder) throws -> Data
+    func encodeToPropertyList(encoder: PropertyListEncoder) throws -> Data
 }
 
 public protocol MultipleContentProtocol: JsonModel {
@@ -22,47 +23,35 @@ public protocol MultipleContentProtocol: JsonModel {
 }
 
 // MARK: - implement
-
 public extension JsonProtocol where Self: Codable {
 
-    static func decodeJson(data: Data?) throws -> Self {
+    static func decodeJson(data: Data?, decoder: JSONDecoder = JSONDecoder()) throws -> Self {
         guard let data = data else {
             throw JsonConvertError.noDataError
-
         }
-        do {
-            return try JSONDecoder().decode(self, from: data)
-        } catch {
-            throw error
-        }
+        return try decoder.decode(self, from: data)
     }
 
-    func encodeToJson() throws -> Data {
-        do {
-            return try JSONEncoder().encode(self)
-        } catch {
-            throw error
-        }
+    func encodeToJson(encoder: JSONEncoder = JSONEncoder()) throws -> Data {
+        return try encoder.encode(self)
+    }
+
+    func encodeToPropertyList(encoder: PropertyListEncoder = PropertyListEncoder()) throws -> Data {
+        return try encoder.encode(self)
     }
 
 }
 
 public extension Data {
 
-    func decodeToModel<T: JsonModel>(type: T.Type) throws -> T {
-        do {
-            return try T.decodeJson(data: self)
-        } catch {
-            throw error
-        }
+    func decodeToModel<T: JsonModel>(type: T.Type, decoder: JSONDecoder = JSONDecoder()) throws -> T {
+        return try T.decodeJson(data: self, decoder: decoder)
     }
 
-    func decodeToModelArray<T: JsonModel>(type: T.Type) throws -> [T] {
-        do {
-            return try JSONDecoder().decode([T].self, from: self)
-        } catch {
-            throw error
-        }
+    func decodePropertyListToModel<T: JsonModel>(type: T.Type, decoder: PropertyListDecoder = PropertyListDecoder()) throws -> T {
+        return try decoder.decode(T.self, from: self)
     }
 
 }
+
+extension Array: JsonProtocol where Element: JsonModel { }

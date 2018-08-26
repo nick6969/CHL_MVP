@@ -33,11 +33,11 @@ open class BasePresenter<T> where T: JsonModel {
         setupClosure()
     }
 
-    fileprivate func setupClosure() {
+    private func setupClosure() {
         dataConvertToModelsClosure = { [weak self] data in
             guard let `self` = self else { return }
             do {
-                let models = try data.decodeToModelArray(type: T.self)
+                let models = try data.decodeToModel(type: [T].self)
                 self.modelsSuccessClosure?(models)
             } catch {
                 self.loadFailClosure?(error)
@@ -57,7 +57,7 @@ open class BasePresenter<T> where T: JsonModel {
         modelsSuccessClosure = { [weak self] models in
             guard let `self` = self else { return }
             var oldCount = self.models.count
-            var newCount = 0
+            var newCount = self.models.count
             if self.status == .loadStart {
                 oldCount = 0
                 newCount = models.count
@@ -106,7 +106,7 @@ open class BasePresenter<T> where T: JsonModel {
         }
     }
 
-    fileprivate func loadDoneChangeState() {
+    private func loadDoneChangeState() {
         switch status {
         case .loadStart:
             status = .loadDone
@@ -117,7 +117,7 @@ open class BasePresenter<T> where T: JsonModel {
         }
     }
 
-    fileprivate func loadFailChangeState() {
+    private func loadFailChangeState() {
         switch status {
         case .loadStart:
             status = .loadFail

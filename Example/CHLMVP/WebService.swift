@@ -22,13 +22,13 @@ final class WebService: SessionManager {
         self.init(configuration: config, delegate: SessionDelegate(), serverTrustPolicyManager: nil)
     }
 
-    fileprivate func request(method: HTTPMethod, url: String = String(), parameters: [String: Any]? = nil, handle: @escaping (Data?, HTTPURLResponse?, Error?) -> Void) {
+    private func request(method: HTTPMethod, url: String = String(), parameters: [String: Any]? = nil, handle: @escaping (Data?, HTTPURLResponse?, Error?) -> Void) {
         request(url, method: method, parameters: parameters).validate().response { response in
             handle(response.data, response.response, response.error)
         }
     }
 
-    fileprivate func baseRequest(method: HTTPMethod, url: String = String(), parameters: [String: Any]?, success: DataCompleClosure?, fail: LoadDataFailClosure?) {
+    private func baseRequest(method: HTTPMethod, url: String = String(), parameters: [String: Any]?, success: DataCompleClosure?, fail: LoadDataFailClosure?) {
         request(method: .get, url: url, parameters: parameters) { (data, res, error) in
 
             guard error == nil else {
