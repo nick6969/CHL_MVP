@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (4.7.1)
-  - CHLMVP (0.1.0)
+  - CHLMVP (0.1.1)
   - FBSnapshotTestCase (2.1.4):
     - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
   - FBSnapshotTestCase/Core (2.1.4)
@@ -22,13 +22,21 @@ DEPENDENCIES:
   - Nimble-Snapshots (~> 6.3.0)
   - Quick (~> 1.2.0)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - FBSnapshotTestCase
+    - Nimble
+    - Nimble-Snapshots
+    - Quick
+
 EXTERNAL SOURCES:
   CHLMVP:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
   Alamofire: 68d7d521118d49c615a8d2214d87cdf525599d30
-  CHLMVP: 5a63010937346b661c1c1a2dab8239342f60a28b
+  CHLMVP: 18b324c04e2018dd41318efe9bf4c7165b6050fc
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
   Nimble-Snapshots: f5459b5b091678dc942d03ec4741cacb58ba4a52
@@ -36,4 +44,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 3241182351e9351a1ba709aeddf5a96bfb8890ed
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3

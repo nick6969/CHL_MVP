@@ -9,6 +9,7 @@ import Foundation
 
 public enum PresenterState {
     case initialize
+    case loadCacheStart
     case loadStart
     case loadDone
     case loadFail

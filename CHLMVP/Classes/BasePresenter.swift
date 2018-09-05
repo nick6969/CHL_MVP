@@ -7,10 +7,11 @@
 
 import Foundation
 
-open class BasePresenter<T> where T: JsonModel {
+open class BasePresenter<T>: ModelCacheProtocol where T: JsonModel {
     public weak var loadDelegate: PresenterLoadDelegate?
     public weak var loadStateDelegate: PresenterLoadStateDelegate?
     public var status: PresenterState = .initialize
+    public var usingCacheData: Bool = false
 
     public var models: [T] = [] {
         didSet {
@@ -28,6 +29,8 @@ open class BasePresenter<T> where T: JsonModel {
 
     public var dataConvertToModelsClosure: ((Data) -> Void)?
     public var dataConvertToModelClosure: ((Data) -> Void)?
+
+    public var cachedModelsSuccessClosure: (([T]) -> Void)?
 
     public init() {
         setupClosure()
@@ -62,6 +65,9 @@ open class BasePresenter<T> where T: JsonModel {
                 oldCount = 0
                 newCount = models.count
                 self.models = models
+                if self.usingCacheData {
+                    type(of: self).cache(models: models)
+                }
             } else if self.status == .loadMoreStart {
                 if models.isEmpty {
                     self.status = .noMoreCanLoad
@@ -85,6 +91,9 @@ open class BasePresenter<T> where T: JsonModel {
         modelSuccessClosure = { [weak self] model in
             guard let `self` = self else { return }
             self.models = [model]
+            if self.usingCacheData {
+                type(of: self).cache(models: [model])
+            }
             self.loadDoneChangeState()
             DispatchQueue.main.async {
                 self.loadStateDelegate?.showLoading(false)
@@ -104,8 +113,28 @@ open class BasePresenter<T> where T: JsonModel {
                 self.loadDelegate?.loadingFail(error)
             }
         }
+
+        cachedModelsSuccessClosure = { [weak self] models in
+            guard let `self` = self else { return }
+            guard self.models.isEmpty else { return }
+            let oldCount = 0
+            let newCount = models.count
+            self.models = models
+            DispatchQueue.main.async {
+                self.loadStateDelegate?.showLoading(false)
+                self.loadStateDelegate?.removeEmptyView()
+                self.loadDelegate?.loadingDone(oldCount, newCount)
+            }
+        }
     }
 
+    public func loadCache() {
+        guard usingCacheData else { return }
+        if let models = type(of: self).getCacheModels() {
+            self.cachedModelsSuccessClosure?(models)
+        }
+    }
+    
     private func loadDoneChangeState() {
         switch status {
         case .loadStart:

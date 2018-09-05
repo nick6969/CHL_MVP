@@ -11,6 +11,11 @@ import CHLMVP
 
 class ShowDataPresenter: BasePresenter<ChurchModel>, StandardPresenter {
 
+    override init() {
+        super.init()
+        usingCacheData = true
+    }
+    
     func loadData() { loadWebData() }
     func loadDataMore() { loadWebData() }
 

@@ -32,6 +32,7 @@ public protocol PresenterLoadProtocol: class {
 }
 
 public protocol PresenterLoadFuncProtocol: class {
+    func loadCache()
     func loadData()
     func loadDataMore()
 }
@@ -49,7 +50,12 @@ public extension PresenterLoadProtocol where Self: BaseDataProtocol, Self: Prese
 
     func nextState() {
         switch status {
-        case .initialize, .loadFail:
+        case .initialize:
+            status = .loadCacheStart
+            loadCache()
+            nextState()
+
+        case .loadCacheStart, .loadFail:
             status = .loadStart
             if models.isEmpty {
                 DispatchQueue.main.async {
