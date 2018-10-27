@@ -18,14 +18,6 @@ public protocol ModelCacheProtocol {
 
 public extension ModelCacheProtocol {
 
-    static var cacheKey: String {
-        return "\(type(of: self))-ModelCacheKey"
-    }
-
-    static func clearCache() {
-        UserDefaults.standard.set(nil, forKey: cacheKey)
-    }
-
     static func getCacheModels() -> [Model]? {
         guard let data = UserDefaults.standard.data(forKey: cacheKey) else { return nil }
         guard let value = try? data.decodePropertyListToModel(type: [Model].self) else { return nil }

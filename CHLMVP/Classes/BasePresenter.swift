@@ -13,6 +13,14 @@ open class BasePresenter<T>: ModelCacheProtocol where T: JsonModel {
     public var status: PresenterState = .initialize
     public var usingCacheData: Bool = false
 
+    public static var cacheKey: String {
+        return "\(type(of: self))-ModelCacheKey"
+    }
+
+    public static func clearCache() {
+        UserDefaults.standard.set(nil, forKey: cacheKey)
+    }
+
     public var models: [T] = [] {
         didSet {
             if models.isEmpty && status != .loadStart {
