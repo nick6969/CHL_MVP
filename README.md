@@ -1,6 +1,5 @@
 # CHLMVP
 
-[![CI Status](http://img.shields.io/travis/hawhaw.ya@gmail.com/CHLMVP.svg?style=flat)](https://travis-ci.org/hawhaw.ya@gmail.com/CHLMVP)
 [![Version](https://img.shields.io/cocoapods/v/CHLMVP.svg?style=flat)](http://cocoapods.org/pods/CHLMVP)
 [![License](https://img.shields.io/cocoapods/l/CHLMVP.svg?style=flat)](http://cocoapods.org/pods/CHLMVP)
 [![Platform](https://img.shields.io/cocoapods/p/CHLMVP.svg?style=flat)](http://cocoapods.org/pods/CHLMVP)
@@ -8,8 +7,6 @@
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
-## Requirements
 
 ## Installation
 
@@ -22,7 +19,7 @@ pod 'CHLMVP'
 
 ## Author
 
-hawhaw.ya@gmail.com, hawhaw.ya@gmail.com
+Nick Lin, hawhaw.ya@gmail.com
 
 ## License
 
