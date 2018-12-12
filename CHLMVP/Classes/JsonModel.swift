@@ -44,12 +44,12 @@ public extension JsonProtocol where Self: Codable {
 
 public extension Data {
 
-    func decodeToModel<T: JsonModel>(type: T.Type, decoder: JSONDecoder = JSONDecoder()) throws -> T {
-        return try T.decodeJson(data: self, decoder: decoder)
+    func decodeToModel<Model: JsonModel>(type: Model.Type, decoder: JSONDecoder = JSONDecoder()) throws -> Model {
+        return try Model.decodeJson(data: self, decoder: decoder)
     }
 
-    func decodePropertyListToModel<T: JsonModel>(type: T.Type, decoder: PropertyListDecoder = PropertyListDecoder()) throws -> T {
-        return try decoder.decode(T.self, from: self)
+    func decodePropertyListToModel<Model: JsonModel>(type: Model.Type, decoder: PropertyListDecoder = PropertyListDecoder()) throws -> Model {
+        return try decoder.decode(Model.self, from: self)
     }
 
 }

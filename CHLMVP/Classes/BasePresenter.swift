@@ -7,7 +7,7 @@
 
 import Foundation
 
-open class BasePresenter<T>: ModelCacheProtocol where T: JsonModel {
+open class BasePresenter<Model>: ModelCacheProtocol where Model: JsonModel {
     public weak var loadDelegate: PresenterLoadDelegate?
     public weak var loadStateDelegate: PresenterLoadStateDelegate?
     public var status: PresenterState = .initialize
@@ -21,7 +21,7 @@ open class BasePresenter<T>: ModelCacheProtocol where T: JsonModel {
         UserDefaults.standard.set(nil, forKey: cacheKey)
     }
 
-    public var models: [T] = [] {
+    public var models: [Model] = [] {
         didSet {
             if models.isEmpty && status != .loadStart {
                 DispatchQueue.main.async {
@@ -31,14 +31,14 @@ open class BasePresenter<T>: ModelCacheProtocol where T: JsonModel {
         }
     }
 
-    public var modelsSuccessClosure: (([T]) -> Void)?
-    public var modelSuccessClosure: ((T) -> Void)?
+    public var modelsSuccessClosure: (([Model]) -> Void)?
+    public var modelSuccessClosure: ((Model) -> Void)?
     public var loadFailClosure: ((Error?) -> Void)?
 
     public var dataConvertToModelsClosure: ((Data) -> Void)?
     public var dataConvertToModelClosure: ((Data) -> Void)?
 
-    public var cachedModelsSuccessClosure: (([T]) -> Void)?
+    public var cachedModelsSuccessClosure: (([Model]) -> Void)?
 
     public init() {
         setupClosure()
@@ -48,7 +48,7 @@ open class BasePresenter<T>: ModelCacheProtocol where T: JsonModel {
         dataConvertToModelsClosure = { [weak self] data in
             guard let `self` = self else { return }
             do {
-                let models = try data.decodeToModel(type: [T].self)
+                let models = try data.decodeToModel(type: [Model].self)
                 self.modelsSuccessClosure?(models)
             } catch {
                 self.loadFailClosure?(error)
@@ -58,7 +58,7 @@ open class BasePresenter<T>: ModelCacheProtocol where T: JsonModel {
         dataConvertToModelClosure = { [weak self] data in
             guard let `self` = self else { return }
             do {
-                let model = try data.decodeToModel(type: T.self)
+                let model = try data.decodeToModel(type: Model.self)
                 self.modelSuccessClosure?(model)
             } catch {
                 self.loadFailClosure?(error)
