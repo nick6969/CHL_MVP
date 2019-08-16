@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'CHLMVP'
-  s.version          = '0.1.2'
+  s.version          = '1.0'
   s.summary          = 'Quickly use MVP.'
 
   s.description      = <<-DESC
@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/nick6969/CHL_MVP.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '9.0'
-  s.swift_version    = "4.0"
+  s.swift_version    = "5.0"
 
   s.source_files = 'CHLMVP/Classes/'
   
