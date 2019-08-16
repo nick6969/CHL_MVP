@@ -33,6 +33,7 @@ class PresenterTest: XCTestCase {
         let presenter = TestPresenter()
         presenter.nextState()
         presenter.dataConvertToModelClosure?(json02)
+        XCTAssert(presenter.status == .loadDone, "state wrong")
         XCTAssert(presenter.models.count == 1, "Convert fail")
         XCTAssert(presenter.models[0].name == "nick", "Data wrong")
         XCTAssert(presenter.models[0].age == 18, "Data wrong")
@@ -42,6 +43,7 @@ class PresenterTest: XCTestCase {
         let presenter = TestPresenter()
         presenter.nextState()
         presenter.dataConvertToModelsClosure?(json01)
+        XCTAssert(presenter.status == .loadDone, "state wrong")
         XCTAssert(presenter.models.count == 2, "Convert fail")
         XCTAssert(presenter.models[0].name == "nick", "Data wrong")
         XCTAssert(presenter.models[0].age == 18, "Data wrong")
@@ -54,6 +56,7 @@ class PresenterTest: XCTestCase {
         presenter.status = .loadFail
         presenter.nextState()
         presenter.dataConvertToModelsClosure?(json01)
+        XCTAssert(presenter.status == .loadDone, "state wrong")
         XCTAssert(presenter.models.count == 2, "Convert fail")
         XCTAssert(presenter.models[0].name == "nick", "Data wrong")
         XCTAssert(presenter.models[0].age == 18, "Data wrong")
@@ -65,9 +68,10 @@ class PresenterTest: XCTestCase {
         let presenter = TestPresenter()
         presenter.status = .loadStart
         presenter.dataConvertToModelsClosure?(json01)
-        presenter.status = .loadDone
+        XCTAssert(presenter.status == .loadDone, "state wrong")
         presenter.nextState()
         presenter.dataConvertToModelsClosure?(json01)
+        XCTAssert(presenter.status == .loadMoreDone, "state wrong")
         XCTAssert(presenter.models.count == 4, "Convert fail")
         XCTAssert(presenter.models[0].name == "nick", "Data wrong")
         XCTAssert(presenter.models[0].age == 18, "Data wrong")
@@ -88,6 +92,7 @@ class PresenterTest: XCTestCase {
         presenter.status = .loadMoreFail
         presenter.nextState()
         presenter.dataConvertToModelsClosure?(json01)
+        XCTAssert(presenter.status == .loadMoreDone, "state wrong")
         XCTAssert(presenter.models.count == 6, "Convert fail")
         XCTAssert(presenter.models[0].name == "nick", "Data wrong")
         XCTAssert(presenter.models[0].age == 18, "Data wrong")
